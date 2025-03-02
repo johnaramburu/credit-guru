@@ -1,117 +1,95 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/context/AuthContext';
-import { motion } from 'framer-motion';
-import { Mail, Lock, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({ email: '', password: '' });
-  const { signIn, isLoading } = useAuth();
-
-  const validateForm = () => {
-    let isValid = true;
-    const newErrors = { email: '', password: '' };
-
-    if (!email) {
-      newErrors.email = 'El correo electrónico es requerido';
-      isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'El correo electrónico no es válido';
-      isValid = false;
-    }
-
-    if (!password) {
-      newErrors.password = 'La contraseña es requerida';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (validateForm()) {
+    if (!email || !password) {
+      toast({
+        title: 'Error',
+        description: 'Por favor, completa todos los campos.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
       await signIn(email, password);
+    } catch (error) {
+      console.error('Error durante inicio de sesión:', error);
+      toast({
+        title: 'Error de inicio de sesión',
+        description: 'No se pudo iniciar sesión. Verifica tus credenciales e intenta de nuevo.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-[calc(100vh-64px)] flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="bg-card rounded-xl border border-border p-8 shadow-lg"
-        >
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center bg-primary text-primary-foreground w-12 h-12 rounded-lg mb-4">
-              <Lock className="h-6 w-6" />
-            </div>
-            <h1 className="text-2xl font-bold tracking-tight">Iniciar Sesión</h1>
-            <p className="text-muted-foreground mt-2">Ingresa tus credenciales para acceder</p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="flex items-center justify-center min-h-screen bg-background">
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold text-center">Iniciar Sesión</CardTitle>
+          <CardDescription className="text-center">
+            Ingresa tus credenciales para acceder a tu cuenta
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-medium">
-                Correo electrónico
-              </Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="nombre@ejemplo.com"
-                  className={`pl-10 ${errors.email ? 'border-destructive' : ''}`}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="email"
-                />
-              </div>
-              {errors.email && (
-                <p className="text-destructive text-sm">{errors.email}</p>
-              )}
+              <Label htmlFor="email">Correo electrónico</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="tucorreo@ejemplo.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
+              />
             </div>
-
             <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <Label htmlFor="password" className="text-sm font-medium">
-                  Contraseña
-                </Label>
-                <Link
-                  to="/forgot-password"
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">Contraseña</Label>
+                <Link 
+                  to="#" 
                   className="text-sm text-primary hover:underline"
                 >
                   ¿Olvidaste tu contraseña?
                 </Link>
               </div>
-              <div className="relative">
-                <Lock className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="********"
-                  className={`pl-10 ${errors.password ? 'border-destructive' : ''}`}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="current-password"
-                />
-              </div>
-              {errors.password && (
-                <p className="text-destructive text-sm">{errors.password}</p>
-              )}
+              <Input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
+              />
             </div>
-
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button 
+              type="submit" 
+              className="w-full" 
+              disabled={isLoading}
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -122,17 +100,19 @@ const Login = () => {
               )}
             </Button>
           </form>
-
-          <div className="mt-6 text-center">
-            <p className="text-sm text-muted-foreground">
-              ¿No tienes una cuenta?{' '}
-              <Link to="/register" className="text-primary hover:underline">
-                Regístrate
-              </Link>
-            </p>
+        </CardContent>
+        <CardFooter className="flex flex-col space-y-4">
+          <div className="text-center text-sm">
+            ¿No tienes una cuenta?{' '}
+            <Link 
+              to="/register" 
+              className="text-primary hover:underline font-medium"
+            >
+              Registrarse
+            </Link>
           </div>
-        </motion.div>
-      </div>
+        </CardFooter>
+      </Card>
     </div>
   );
 };

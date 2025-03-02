@@ -1,195 +1,165 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { useAuth } from '@/context/AuthContext';
-import {
-  CreditCard,
-  DollarSign,
-  Users,
-  Shield,
-  BarChart,
-  ChevronRight
-} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import PageTransition from '@/components/ui/PageTransition';
+import { ArrowRight, BarChart3, Coins, CreditCard, Lock, Users } from 'lucide-react';
 
 const Index = () => {
-  const { user } = useAuth();
-
-  const features = [
-    {
-      title: 'Gestión de Créditos',
-      description: 'Administra y visualiza todos tus créditos hipotecarios en un solo lugar.',
-      icon: <CreditCard className="h-8 w-8 text-primary" />,
-    },
-    {
-      title: 'Control de Inversiones',
-      description: 'Seguimiento detallado de todas tus inversiones y rendimientos.',
-      icon: <DollarSign className="h-8 w-8 text-primary" />,
-    },
-    {
-      title: 'Administración de Inversionistas',
-      description: 'Gestiona eficientemente la información de todos tus inversionistas.',
-      icon: <Users className="h-8 w-8 text-primary" />,
-    },
-    {
-      title: 'Máxima Seguridad',
-      description: 'Protección de datos con los más altos estándares de seguridad.',
-      icon: <Shield className="h-8 w-8 text-primary" />,
-    },
-    {
-      title: 'Reportes y Estadísticas',
-      description: 'Visualización gráfica de datos para una mejor toma de decisiones.',
-      icon: <BarChart className="h-8 w-8 text-primary" />,
-    },
-  ];
-
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  };
-
   return (
-    <div className="flex flex-col min-h-[calc(100vh-64px)]">
-      {/* Hero Section */}
-      <section className="py-20 md:py-32 px-4 md:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-3xl mx-auto"
-        >
-          <div className="inline-block bg-primary/10 text-primary rounded-full px-4 py-1.5 text-sm font-medium mb-6">
-            Gestión de Créditos Garantía Hipotecaria
-          </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-            Potencia tus inversiones con créditos garantizados
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Plataforma integral para administrar y hacer seguimiento a tus inversiones en créditos con garantía hipotecaria.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="px-8">
-              <Link to={user ? "/dashboard" : "/register"}>
-                {user ? "Ir al panel" : "Comenzar ahora"}
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="px-8">
-              <Link to="/login">
-                {user ? "Ver mi cuenta" : "Iniciar sesión"}
-              </Link>
-            </Button>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 px-4 md:px-6 lg:px-8 bg-card">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-              Todo lo que necesitas para gestionar tus inversiones
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Nuestra plataforma ofrece herramientas potentes y fáciles de usar para optimizar tus inversiones en créditos garantía hipotecaria.
+    <PageTransition>
+      <div className="min-h-screen bg-background">
+        {/* Hero section */}
+        <div className="container mx-auto px-4 py-16 md:py-24">
+          <div className="flex flex-col items-center text-center space-y-8 max-w-3xl mx-auto">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+              Plataforma de Gestión de <span className="text-primary">Créditos e Inversiones</span>
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground">
+              Administra créditos, realiza inversiones y controla tu cartera en una sola plataforma segura y eficiente.
             </p>
-          </motion.div>
-
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                variants={item}
-                className="glass-card p-6 rounded-xl"
-              >
-                <div className="bg-primary/10 rounded-lg inline-block p-3 mb-4">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
-              </motion.div>
-            ))}
-          </motion.div>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button size="lg" asChild>
+                <Link to="/register">
+                  Crear cuenta <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <Link to="/login">
+                  Iniciar sesión
+                </Link>
+              </Button>
+            </div>
+          </div>
         </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 md:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-4xl mx-auto bg-primary/5 border border-primary/20 rounded-2xl p-8 md:p-12 text-center"
-        >
-          <h2 className="text-3xl font-bold tracking-tight mb-4">
-            Empieza a controlar tus inversiones hoy
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Únete a nuestra plataforma y descubre una nueva forma de gestionar tus créditos garantía hipotecaria.
-          </p>
-          <Button asChild size="lg" className="px-8">
-            <Link to={user ? "/dashboard" : "/register"} className="flex items-center">
-              {user ? "Ir al panel" : "Registrarse gratis"}
-              <ChevronRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </motion.div>
-      </section>
+        {/* Features section */}
+        <div className="bg-secondary/50 py-16">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">Características principales</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Feature 1 */}
+              <Card>
+                <CardHeader>
+                  <CreditCard className="h-10 w-10 text-primary mb-2" />
+                  <CardTitle>Gestión de Créditos</CardTitle>
+                  <CardDescription>
+                    Administra créditos de forma eficiente con toda la información centralizada
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Crea, edita y da seguimiento a tus créditos. Visualiza estados, vencimientos y rendimientos de forma clara y organizada.
+                  </p>
+                </CardContent>
+              </Card>
 
-      {/* Footer */}
-      <footer className="py-10 px-4 md:px-6 lg:px-8 bg-card mt-auto">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-6 md:mb-0">
-              <div className="text-xl font-bold text-foreground tracking-tight flex items-center">
-                <span className="bg-primary text-primary-foreground px-2 py-1 rounded mr-2">CG</span>
-                <span>Crédito Garantía</span>
-              </div>
-              <p className="text-sm text-muted-foreground mt-2">
-                Plataforma de gestión de créditos garantía hipotecaria
+              {/* Feature 2 */}
+              <Card>
+                <CardHeader>
+                  <Coins className="h-10 w-10 text-primary mb-2" />
+                  <CardTitle>Inversiones Seguras</CardTitle>
+                  <CardDescription>
+                    Invierte en créditos predefinidos y obtén rendimientos atractivos
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Accede a oportunidades de inversión verificadas, con tasas de interés competitivas y plazos flexibles.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Feature 3 */}
+              <Card>
+                <CardHeader>
+                  <BarChart3 className="h-10 w-10 text-primary mb-2" />
+                  <CardTitle>Análisis y Reportes</CardTitle>
+                  <CardDescription>
+                    Visualiza el desempeño de tus inversiones en tiempo real
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Gráficos detallados, estadísticas y reportes descargables para un seguimiento completo de tu actividad financiera.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Feature 4 */}
+              <Card>
+                <CardHeader>
+                  <Lock className="h-10 w-10 text-primary mb-2" />
+                  <CardTitle>Seguridad Avanzada</CardTitle>
+                  <CardDescription>
+                    Tus datos y transacciones protegidos en todo momento
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Implementamos las medidas de seguridad más avanzadas para proteger tus datos y garantizar la integridad de cada transacción.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Feature 5 */}
+              <Card>
+                <CardHeader>
+                  <Users className="h-10 w-10 text-primary mb-2" />
+                  <CardTitle>Perfiles Múltiples</CardTitle>
+                  <CardDescription>
+                    Diferentes roles para distintas necesidades
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    Administradores, inversionistas y gestores con acceso personalizado según sus responsabilidades en la plataforma.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA section */}
+        <div className="container mx-auto px-4 py-16 md:py-24">
+          <div className="bg-primary/10 rounded-2xl p-8 md:p-12 text-center">
+            <h2 className="text-3xl font-bold mb-4">¿Listo para comenzar?</h2>
+            <p className="text-lg mb-8 max-w-2xl mx-auto">
+              Únete a nuestra plataforma y empieza a gestionar tus inversiones de manera inteligente y segura.
+            </p>
+            <Button size="lg" asChild>
+              <Link to="/register">
+                Crear cuenta gratuita
+              </Link>
+            </Button>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <footer className="border-t py-8">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <p className="text-muted-foreground mb-4 md:mb-0">
+                © 2024 Credit Guru. Todos los derechos reservados.
               </p>
-            </div>
-            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
-              <Link to="/about" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Acerca de
-              </Link>
-              <Link to="/privacy" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Privacidad
-              </Link>
-              <Link to="/terms" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Términos
-              </Link>
-              <Link to="/contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Contacto
-              </Link>
+              <div className="flex space-x-6">
+                <Link to="#" className="text-muted-foreground hover:text-foreground">
+                  Términos de servicio
+                </Link>
+                <Link to="#" className="text-muted-foreground hover:text-foreground">
+                  Política de privacidad
+                </Link>
+                <Link to="#" className="text-muted-foreground hover:text-foreground">
+                  Contacto
+                </Link>
+              </div>
             </div>
           </div>
-          <div className="mt-8 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Crédito Garantía. Todos los derechos reservados.
-          </div>
-        </div>
-      </footer>
-    </div>
+        </footer>
+      </div>
+    </PageTransition>
   );
 };
 
