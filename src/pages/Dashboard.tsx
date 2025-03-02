@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { motion } from 'framer-motion';
@@ -6,13 +5,13 @@ import DashboardCard from '@/components/dashboard/DashboardCard';
 import MetricCard from '@/components/dashboard/MetricCard';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { BarChart as ChartComponent } from '@/components/ui/chart';
+import { BarChart } from '@/components/ui/chart';
 import { 
   CreditCard, 
   DollarSign, 
   Users, 
   ArrowUpRight, 
-  BarChart, 
+  BarChart as BarChartIcon, 
   ChartPieIcon, 
   Plus 
 } from 'lucide-react';
@@ -132,8 +131,7 @@ const Dashboard = () => {
         <div className="lg:col-span-2">
           <DashboardCard title="Actividad Reciente" gradient="primary">
             <div className="h-80">
-              <ChartComponent
-                type="bar"
+              <BarChart
                 data={mockChartData}
                 categories={['creditos', 'depositos']}
                 index="name"
@@ -147,19 +145,10 @@ const Dashboard = () => {
         
         <div>
           <DashboardCard title="Distribución por Estado" gradient="secondary">
-            <div className="h-80">
-              <ChartComponent
-                type="pie"
-                data={[
-                  { name: 'Activos', value: 60 },
-                  { name: 'Pendientes', value: 25 },
-                  { name: 'Completados', value: 15 },
-                ]}
-                index="name"
-                category="value"
-                colors={['#8b5cf6', '#60a5fa', '#34d399']}
-                valueFormatter={(value: number) => `${value}%`}
-              />
+            <div className="h-80 flex items-center justify-center">
+              <p className="text-muted-foreground">
+                Gráfico de distribución en desarrollo
+              </p>
             </div>
           </DashboardCard>
         </div>
