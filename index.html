@@ -1,38 +1,21 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credit Guru - CGH Project</title>
-    
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>credit-guru</title>
     <!-- Metaetiquetas Open Graph (para Slack, Facebook, etc.) -->
     <meta property="og:title" content="Credit Guru - CGH Project">
     <meta property="og:description" content="Optimiza tu crédito con Credit Guru.">
     <meta property="og:url" content="https://cgh-test.netlify.app/">
     <meta property="og:image" content="https://cgh-test.netlify.app/og-image.png">
     <meta property="og:type" content="website">
+  </head>
 
-    <!-- Metaetiquetas Twitter (para Twitter y otras plataformas) -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Credit Guru - CGH Project">
-    <meta name="twitter:description" content="Optimiza tu crédito con Credit Guru.">
-    <meta name="twitter:image" content="https://cgh-test.netlify.app/og-image.png">
-
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <h1>Bienvenido a Credit Guru</h1>
-        <p>Tu herramienta para optimizar el crédito.</p>
-    </header>
-    <main>
-        <section>
-            <h2>¿Qué hacemos?</h2>
-            <p>Ayudamos a mejorar tu historial crediticio con análisis y estrategias personalizadas.</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 Credit Guru. Todos los derechos reservados.</p>
-    </footer>
-</body>
+  <body>
+    <div id="root"></div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
