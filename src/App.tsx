@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,6 +12,7 @@ import Dashboard from "./pages/Dashboard";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import Layout from "@/components/layout/Layout";
 import Investors from "./pages/Investors";
+import Credits from "./pages/Credits";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +54,14 @@ const AppRoutes = () => {
         <ProtectedRoute>
           <Layout>
             <Investors />
+          </Layout>
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/credits" element={
+        <ProtectedRoute>
+          <Layout>
+            <Credits />
           </Layout>
         </ProtectedRoute>
       } />
