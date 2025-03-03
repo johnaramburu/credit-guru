@@ -9,7 +9,173 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      credit_assignments: {
+        Row: {
+          amount: number
+          created_at: string | null
+          credit_id: string
+          id: string
+          investor_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          credit_id: string
+          id?: string
+          investor_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          credit_id?: string
+          id?: string
+          investor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "credit_assignments_credit_id_fkey"
+            columns: ["credit_id"]
+            isOneToOne: false
+            referencedRelation: "credits"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "credit_assignments_investor_id_fkey"
+            columns: ["investor_id"]
+            isOneToOne: false
+            referencedRelation: "investors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      credits: {
+        Row: {
+          assigned_amount: number
+          created_at: string | null
+          description: string | null
+          end_date: string
+          id: string
+          interest_rate: number
+          start_date: string
+          status: string
+          title: string
+          total_amount: number
+        }
+        Insert: {
+          assigned_amount?: number
+          created_at?: string | null
+          description?: string | null
+          end_date: string
+          id?: string
+          interest_rate: number
+          start_date: string
+          status: string
+          title: string
+          total_amount: number
+        }
+        Update: {
+          assigned_amount?: number
+          created_at?: string | null
+          description?: string | null
+          end_date?: string
+          id?: string
+          interest_rate?: number
+          start_date?: string
+          status?: string
+          title?: string
+          total_amount?: number
+        }
+        Relationships: []
+      }
+      deposits: {
+        Row: {
+          amount: number
+          created_at: string | null
+          date: string | null
+          id: string
+          investor_id: string
+          notes: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          date?: string | null
+          id?: string
+          investor_id: string
+          notes?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          date?: string | null
+          id?: string
+          investor_id?: string
+          notes?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deposits_investor_id_fkey"
+            columns: ["investor_id"]
+            isOneToOne: false
+            referencedRelation: "investors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      investors: {
+        Row: {
+          balance: number
+          created_at: string | null
+          email: string
+          full_name: string
+          id: string
+          total_deposited: number
+          total_invested: number
+          user_id: string
+        }
+        Insert: {
+          balance?: number
+          created_at?: string | null
+          email: string
+          full_name: string
+          id?: string
+          total_deposited?: number
+          total_invested?: number
+          user_id: string
+        }
+        Update: {
+          balance?: number
+          created_at?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          total_deposited?: number
+          total_invested?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          full_name: string
+          id: string
+          role: string
+        }
+        Insert: {
+          created_at?: string | null
+          full_name: string
+          id: string
+          role: string
+        }
+        Update: {
+          created_at?: string | null
+          full_name?: string
+          id?: string
+          role?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

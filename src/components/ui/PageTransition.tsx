@@ -1,18 +1,20 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 interface PageTransitionProps {
   children: React.ReactNode;
-  location: string;
+  location?: string;
 }
 
 const PageTransition: React.FC<PageTransitionProps> = ({ children, location }) => {
-  const [renderKey, setRenderKey] = useState(location);
+  const routerLocation = useLocation();
+  const [renderKey, setRenderKey] = useState(location || routerLocation.pathname);
   
   useEffect(() => {
-    setRenderKey(location);
-  }, [location]);
+    setRenderKey(location || routerLocation.pathname);
+  }, [location, routerLocation.pathname]);
 
   return (
     <AnimatePresence mode="wait">
