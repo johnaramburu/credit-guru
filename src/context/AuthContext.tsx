@@ -50,6 +50,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     fetchSession();
 
     const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state changed:', event, session);
+      
       setSession(session);
       setUser(session?.user || null);
       
@@ -57,6 +59,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         await fetchProfile(session.user.id);
       } else if (event === 'SIGNED_OUT') {
         setProfile(null);
+        setIsLoading(false);
       }
     });
 
@@ -120,7 +123,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setIsLoading(true);
       
-      // Create user account
       const { data: authData, error: authError } = await supabase.auth.signUp({ 
         email, 
         password,
@@ -141,7 +143,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       
       if (authData.user) {
-        // Create profile record
         const { error: profileError } = await supabase
           .from('profiles')
           .insert({
@@ -159,7 +160,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           return;
         }
         
-        // If registering as investor, create investor record
         if (role === 'investor') {
           const { error: investorError } = await supabase
             .from('investors')
@@ -215,6 +215,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return;
       }
       
+      setUser(null);
+      setProfile(null);
+      setSession(null);
+      setIsLoading(false);
+      
       navigate('/');
       toast({
         title: "Sesión cerrada",
@@ -227,7 +232,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: "Ha ocurrido un error inesperado",
         variant: "destructive",
       });
-    } finally {
       setIsLoading(false);
     }
   };

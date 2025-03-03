@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,7 +18,8 @@ const queryClient = new QueryClient();
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, isLoading } = useAuth();
   
-  if (isLoading) {
+  // Only show loading if we're waiting for session and not immediately after logout
+  if (isLoading && !user) {
     return <div className="flex items-center justify-center h-screen">Cargando...</div>;
   }
   
