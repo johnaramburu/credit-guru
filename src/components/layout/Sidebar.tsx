@@ -91,9 +91,9 @@ const Sidebar: React.FC = () => {
       <div className="p-6">
         <Link to="/" className="flex items-center gap-2">
           <div className="bg-primary text-primary-foreground font-semibold rounded-md p-1 text-lg">
-            CG
+            CGH
           </div>
-          <span className="font-semibold text-lg tracking-tight">Crédito Garantía</span>
+          <span className="font-semibold text-lg tracking-tight">Crédito Garantía Hipotecaria</span>
         </Link>
       </div>
 
