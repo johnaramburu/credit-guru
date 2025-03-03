@@ -64,7 +64,7 @@ const Navbar: React.FC = () => {
             to="/" 
             className="text-2xl font-bold text-foreground tracking-tight flex items-center"
           >
-            <span className="bg-primary text-primary-foreground px-2 py-1 rounded mr-2">CG</span>
+            <span className="bg-primary text-primary-foreground px-2 py-1 rounded mr-2">CGH</span>
             <span className="hidden sm:inline">Crédito Garantía Hipotecaria</span>
           </Link>
 
